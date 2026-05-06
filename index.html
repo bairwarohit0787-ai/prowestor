@@ -20,6 +20,131 @@ body {
 .card {
   background: #132f46;
   padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #00b894;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.pack {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- USER INFO BOX -->
+  <div id="loginBox" class="card">
+    <h3>User Information</h3>
+    <input type="text" id="userId" placeholder="Enter User ID">
+    <input type="text" id="name" placeholder="Enter Name">
+    <br>
+    <button onclick="continueStep()">Continue</button>
+  </div>
+
+  <!-- CONFIRM BOX -->
+  <div id="confirmBox" class="card hidden">
+    <h3>Confirm Details</h3>
+    <p id="showData"></p>
+    <button onclick="showOptions()">Confirm</button>
+  </div>
+
+  <!-- OPTIONS -->
+  <div id="options" class="hidden">
+
+    <div class="card">
+      <h3>Red Packet</h3>
+      <div class="pack"><span>1800</span><button onclick="buy('Red Packet 1800 - ₹199')">₹199</button></div>
+      <div class="pack"><span>3000</span><button onclick="buy('Red Packet 3000 - ₹249')">₹249</button></div>
+    </div>
+
+    <div class="card">
+      <h3>Gold</h3>
+      <div class="pack"><span>1800</span><button onclick="buy('Gold 1800 - ₹199')">₹199</button></div>
+      <div class="pack"><span>3000</span><button onclick="buy('Gold 3000 - ₹249')">₹249</button></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function continueStep() {
+  let userId = document.getElementById('userId').value;
+  let name = document.getElementById('name').value;
+
+  if(userId === '' || name === ''){
+    alert('Please fill all details');
+    return;
+  }
+
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('confirmBox').classList.remove('hidden');
+
+  document.getElementById('showData').innerText =
+    "User ID: " + userId + "\nName: " + name;
+}
+
+function showOptions() {
+  document.getElementById('confirmBox').style.display = 'none';
+  document.getElementById('options').classList.remove('hidden');
+}
+
+function buy(item) {
+  alert('You selected: ' + item + '\nProceed to payment');
+}
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<title>Prowestor</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0b1e2d;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.card {
+  background: #132f46;
+  padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);

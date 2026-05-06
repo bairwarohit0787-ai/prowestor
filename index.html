@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prowestor</title>
 
 <style>
 body {
+  margin: 0;
   font-family: Arial;
-  background: #0b1e2d;
+  background: #061c2d;
   color: white;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: black;
+  color: #00e6b8;
+  font-size: 20px;
+}
+
+/* BANNER */
+.banner {
   text-align: center;
+  padding: 15px;
 }
 
-.container {
-  max-width: 400px;
-  margin: auto;
-  margin-top: 40px;
+.banner img {
+  width: 90%;
+  border-radius: 12px;
 }
 
+/* CARD */
 .card {
   background: #132f46;
+  margin: 15px;
   padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 input {
   width: 90%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
 }
 
 button {
   padding: 10px 20px;
-  border: none;
   background: #00b894;
+  border: none;
   color: white;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-}
-
-.hidden {
-  display: none;
 }
 
 .pack {
@@ -50,162 +65,128 @@ button {
   justify-content: space-between;
   margin: 10px 0;
 }
+
+.hidden {
+  display: none;
+}
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<!-- HEADER -->
+<div class="header">
+  <div>☰</div>
+  <div>Prowestor</div>
+  <div>🔍</div>
+</div>
 
-  <!-- USER INFO BOX -->
-  <div id="loginBox" class="card">
-    <h3>User Information</h3>
-    <input type="text" id="userId" placeholder="Enter User ID">
-    <input type="text" id="name" placeholder="Enter Name">
-    <br>
-    <button onclick="continueStep()">Continue</button>
+<!-- BANNER -->
+<div class="banner">
+  <img src="https://i.imgur.com/8Km9tLL.png">
+</div>
+
+<!-- USER INFO -->
+<div id="loginBox" class="card">
+  <h3>User Information</h3>
+  <input type="text" id="userId" placeholder="Enter Prowestor ID">
+  <input type="text" id="name" placeholder="Enter Name">
+  <br>
+  <button onclick="continueStep()">Continue</button>
+</div>
+
+<!-- CONFIRM -->
+<div id="confirmBox" class="card hidden">
+  <h3>Confirm</h3>
+  <p id="showData"></p>
+  <button onclick="showOptions()">Confirm</button>
+</div>
+
+<!-- PACKAGES -->
+<div id="options" class="hidden">
+
+  <div class="card">
+    <h3>Red Packet</h3>
+    <div class="pack"><span>1800</span><button onclick="pay(199,'1800 Red')">₹199</button></div>
+    <div class="pack"><span>3000</span><button onclick="pay(249,'3000 Red')">₹249</button></div>
+    <div class="pack"><span>10K</span><button onclick="pay(599,'10K Red')">₹599</button></div>
+    <div class="pack"><span>50K</span><button onclick="pay(2599,'50K Red')">₹2599</button></div>
+    <div class="pack"><span>100K</span><button onclick="pay(4599,'100K Red')">₹4599</button></div>
   </div>
 
-  <!-- CONFIRM BOX -->
-  <div id="confirmBox" class="card hidden">
-    <h3>Confirm Details</h3>
-    <p id="showData"></p>
-    <button onclick="showOptions()">Confirm</button>
-  </div>
-
-  <!-- OPTIONS -->
-  <div id="options" class="hidden">
-
-    <div class="card">
-      <h3>Red Packet</h3>
-      <div class="pack"><span>1800</span><button onclick="buy('Red Packet 1800 - ₹199')">₹199</button></div>
-      <div class="pack"><span>3000</span><button onclick="buy('Red Packet 3000 - ₹249')">₹249</button></div>
-    </div>
-
-    <div class="card">
-      <h3>Gold</h3>
-      <div class="pack"><span>1800</span><button onclick="buy('Gold 1800 - ₹199')">₹199</button></div>
-      <div class="pack"><span>3000</span><button onclick="buy('Gold 3000 - ₹249')">₹249</button></div>
-    </div>
-
+  <div class="card">
+    <h3>We Play Coin</h3>
+    <div class="pack"><span>1800</span><button onclick="pay(199,'1800 Coin')">₹199</button></div>
+    <div class="pack"><span>3000</span><button onclick="pay(249,'3000 Coin')">₹249</button></div>
+    <div class="pack"><span>10K</span><button onclick="pay(599,'10K Coin')">₹599</button></div>
+    <div class="pack"><span>50K</span><button onclick="pay(2599,'50K Coin')">₹2599</button></div>
+    <div class="pack"><span>100K</span><button onclick="pay(4599,'100K Coin')">₹4599</button></div>
   </div>
 
 </div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
 
-function continueStep() {
-  let userId = document.getElementById('userId').value;
-  let name = document.getElementById('name').value;
+let userIdGlobal = "";
+let nameGlobal = "";
 
-  if(userId === '' || name === ''){
-    alert('Please fill all details');
+/* STEP 1 */
+function continueStep() {
+  let id = document.getElementById("userId").value;
+  let name = document.getElementById("name").value;
+
+  if(id=="" || name==""){
+    alert("Fill all details");
     return;
   }
 
-  document.getElementById('loginBox').style.display = 'none';
-  document.getElementById('confirmBox').classList.remove('hidden');
+  userIdGlobal = id;
+  nameGlobal = name;
 
-  document.getElementById('showData').innerText =
-    "User ID: " + userId + "\nName: " + name;
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("confirmBox").classList.remove("hidden");
+
+  document.getElementById("showData").innerHTML =
+    "ID: "+id+"<br>Name: "+name;
 }
 
+/* STEP 2 */
 function showOptions() {
-  document.getElementById('confirmBox').style.display = 'none';
-  document.getElementById('options').classList.remove('hidden');
+  document.getElementById("confirmBox").style.display = "none";
+  document.getElementById("options").classList.remove("hidden");
 }
 
-function buy(item) {
-  alert('You selected: ' + item + '\nProceed to payment');
-}
+/* PAYMENT */
+function pay(amount, plan) {
 
+  var options = {
+    "key": "YOUR_KEY_HERE",
+    "amount": amount * 100,
+    "currency": "INR",
+    "name": "Prowestor",
+    "description": plan,
+
+    "handler": function (response){
+
+      alert("Payment Success!");
+
+      /* 🔴 Yaha backend call karna padega */
+      console.log({
+        userId: userIdGlobal,
+        name: nameGlobal,
+        plan: plan,
+        payment: response.razorpay_payment_id
+      });
+    }
+  };
+
+  var rzp = new Razorpay(options);
+  rzp.open();
+}
 </script>
-
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<title>Prowestor</title>
-
-<style>
-body {
-  font-family: Arial;
-  background: #0b1e2d;
-  color: white;
-  text-align: center;
-}
-
-.container {
-  max-width: 400px;
-  margin: auto;
-  margin-top: 40px;
-}
-
-.card {
-  background: #132f46;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.pack {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-}
-
-button {
-  padding: 8px 15px;
-  border: none;
-  background: #00b894;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #019874;
-}
-
-h3 {
-  margin-bottom: 10px;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-  <!-- RED PACKET -->
-  <div class="card">
-    <h3>Red Packet</h3>
-
-    <div class="pack"><span>1800 Red Packet</span><button>₹199</button></div>
-    <div class="pack"><span>3000 Red Packet</span><button>₹249</button></div>
-    <div class="pack"><span>10,000 Red Packet</span><button>₹599</button></div>
-    <div class="pack"><span>50,000 Red Packet</span><button>₹2599</button></div>
-    <div class="pack"><span>100,000 Red Packet</span><button>₹4599</button></div>
-
-  </div>
-
-  <!-- WE PLAY COIN -->
-  <div class="card">
-    <h3>We Play Coin</h3>
-
-    <div class="pack"><span>1800 Coin</span><button>₹199</button></div>
-    <div class="pack"><span>3000 Coin</span><button>₹249</button></div>
-    <div class="pack"><span>10,000 Coin</span><button>₹599</button></div>
-    <div class="pack"><span>50,000 Coin</span><button>₹2599</button></div>
-    <div class="pack"><span>100,000 Coin</span><button>₹4599</button></div>
-
-  </div>
-
-</div>
 
 </body>
 </html>

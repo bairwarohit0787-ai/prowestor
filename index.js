@@ -41,62 +41,19 @@ function pay(amount, planName) {
 
     prefill: {
       name: userName
-      body {
-  font-family: Arial;
-  background: #0b1e2d;
-  color: white;
-  text-align: center;
+      function showOptions() {
+  let userId = document.getElementById('userId').value;
+  let name = document.getElementById('name').value;
+
+  if(userId === '' || name === ''){
+    alert('Please fill all details');
+    return;
+  }
+
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('options').classList.remove('hidden');
 }
 
-.container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
+function buy(item) {
+  alert('You selected: ' + item + '\nProceed to payment');
 }
-
-.card {
-  background: #122f4a;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  border: none;
-}
-
-button {
-  padding: 10px 20px;
-  background: #00b894;
-  border: none;
-  border-radius: 8px;
-  color: white;
-}
-
-.pack {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-  padding: 10px;
-  background: #1f4d73;
-  border-radius: 8px;
-}
-
-.hidden {
-  display: none;
-}
-    }
-  };
-
-  var rzp = new Razorpay(options);
-  rzp.open();
-}
-document.getElementById('continueBtn').addEventListener('click', function() {
-    alert('Recharge system connect ho raha hai...');
-    // Agar aap kisi doosre page par bhejna chahte hain:
-    // window.location.href = "recharge.html"; 
-});

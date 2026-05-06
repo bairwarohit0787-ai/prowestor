@@ -60,3 +60,18 @@ function buy(item) {
 if(name == "" || phone == "") {
   alert("Please fill all details");
 }
+  if(name == "" || id == ""){
+    alert("Please fill all details");
+}
+function validateForm() {
+    let name = document.getElementById("name").value.trim();
+    let id = document.getElementById("id").value.trim();
+
+    if (name === "" || id === "") {
+        alert("Please fill all details");
+        return false;
+    }
+
+    alert("Form submitted successfully");
+    return true;
+}

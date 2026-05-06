@@ -1,161 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prowestor</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<title>Prowestor</title>
 
-<header>
-  <h1>Prowestor</h1>
-</header>
-
-<section class="hero">
-  <h2>Welcome to Prowestor</h2>
-  <p>Digital service platform for user credits</p>
-</section>
-
-<section class="user-form">
-  <h3>User Information</h3>
-  <input type="text" id="userId" placeholder="Enter User ID">
-  <input type="text" id="userName" placeholder="Enter Name">
-  <button onclick="showPlans()">Continue</button>
-</section>
-
-<section id="plans" class="hidden" style="display:none;">
-  <h3>Select Plan</h3>
-
-  <div class="plan">
-    <h4>Red Credits</h4>
-    <button onclick="pay(199, '1800 Red')">₹199 - 1800</button>
-    <button onclick="pay(249, '3000 Red')">₹249 - 3000</button>
-    <button onclick="pay(599, '10K Red')">₹599 - 10K</button>
-  </div>
-
-  <div class="plan">
-    <h4>Gold Credits</h4>
-    <button onclick="pay(199, '1800 Gold')">₹199 - 1800</button>
-  </div>
-</section>
-
-<footer>
-  <a href="terms.html">Terms</a> | 
-  <a href="privacy.html">Privacy</a> | 
-  <a href="refund.html">Refund</a> | 
-  <a href="contact.html">Contact</a>
-</footer>
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="script.js"></script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prowestor - Welcome</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <h1>Prowestor Website Live Hai!</h1>
-    <p>Ye meri pehli website hai jo GitHub par host hui hai.</p>
-    <a href="contact.html">Contact Us</a>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prowestor - Purchase</title>
 <style>
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #0b1e2d;
   color: white;
   text-align: center;
 }
+
 .container {
   max-width: 400px;
   margin: auto;
-  padding: 20px;
+  margin-top: 40px;
 }
+
 .card {
-  background: #122f4a;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 15px;
+  background: #132f46;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
 }
+
 input {
   width: 90%;
   padding: 10px;
   margin: 10px;
-  border-radius: 8px;
+  border-radius: 5px;
   border: none;
 }
+
 button {
   padding: 10px 20px;
-  background: #00b894;
   border: none;
-  border-radius: 8px;
+  background: #00b894;
   color: white;
+  border-radius: 5px;
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}
+
 .pack {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
-  padding: 10px;
-  background: #1f4d73;
-  border-radius: 8px;
-}
-.hidden {
-  display: none;
 }
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
-  <h1>Prowestor</h1>
 
+  <!-- USER INFO BOX -->
   <div id="loginBox" class="card">
     <h3>User Information</h3>
     <input type="text" id="userId" placeholder="Enter User ID">
     <input type="text" id="name" placeholder="Enter Name">
     <br>
-    <button onclick="showOptions()">Continue</button>
+    <button onclick="continueStep()">Continue</button>
   </div>
 
+  <!-- CONFIRM BOX -->
+  <div id="confirmBox" class="card hidden">
+    <h3>Confirm Details</h3>
+    <p id="showData"></p>
+    <button onclick="showOptions()">Confirm</button>
+  </div>
+
+  <!-- OPTIONS -->
   <div id="options" class="hidden">
 
     <div class="card">
       <h3>Red Packet</h3>
       <div class="pack"><span>1800</span><button onclick="buy('Red Packet 1800 - ₹199')">₹199</button></div>
       <div class="pack"><span>3000</span><button onclick="buy('Red Packet 3000 - ₹249')">₹249</button></div>
-      <div class="pack"><span>10,000</span><button onclick="buy('Red Packet 10K - ₹599')">₹599</button></div>
-      <div class="pack"><span>50,000</span><button onclick="buy('Red Packet 50K - ₹2599')">₹2599</button></div>
-      <div class="pack"><span>100,000</span><button onclick="buy('Red Packet 100K - ₹4999')">₹4999</button></div>
     </div>
 
     <div class="card">
       <h3>Gold</h3>
       <div class="pack"><span>1800</span><button onclick="buy('Gold 1800 - ₹199')">₹199</button></div>
       <div class="pack"><span>3000</span><button onclick="buy('Gold 3000 - ₹249')">₹249</button></div>
-      <div class="pack"><span>10,000</span><button onclick="buy('Gold 10K - ₹599')">₹599</button></div>
-      <div class="pack"><span>50,000</span><button onclick="buy('Gold 50K - ₹2599')">₹2599</button></div>
-      <div class="pack"><span>100,000</span><button onclick="buy('Gold 100K - ₹4999')">₹4999</button></div>
     </div>
 
   </div>
+
 </div>
 
 <script>
-function showOptions() {
+
+function continueStep() {
   let userId = document.getElementById('userId').value;
   let name = document.getElementById('name').value;
 
@@ -165,33 +105,22 @@ function showOptions() {
   }
 
   document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('confirmBox').classList.remove('hidden');
+
+  document.getElementById('showData').innerText =
+    "User ID: " + userId + "\nName: " + name;
+}
+
+function showOptions() {
+  document.getElementById('confirmBox').style.display = 'none';
   document.getElementById('options').classList.remove('hidden');
 }
 
 function buy(item) {
-  alert('You selected: ' + item + '\nProceed to payment gateway');
+  alert('You selected: ' + item + '\nProceed to payment');
 }
+
 </script>
 
 </body>
 </html>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #0b1e2d;
-  color: white;
-}
-...
-</style>
-<script>
-function showOptions() {
-  ...
-}
-
-function buy(item) {
-  ...
-}
-</script>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-<button onclick="validateForm()">Confirm</button>

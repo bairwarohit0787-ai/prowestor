@@ -47,3 +47,8 @@ function pay(amount, planName) {
   var rzp = new Razorpay(options);
   rzp.open();
 }
+document.getElementById('continueBtn').addEventListener('click', function() {
+    alert('Recharge system connect ho raha hai...');
+    // Agar aap kisi doosre page par bhejna chahte hain:
+    // window.location.href = "recharge.html"; 
+});

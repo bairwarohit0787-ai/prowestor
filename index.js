@@ -57,3 +57,6 @@ function pay(amount, planName) {
 function buy(item) {
   alert('You selected: ' + item + '\nProceed to payment');
 }
+if(name == "" || phone == "") {
+  alert("Please fill all details");
+}

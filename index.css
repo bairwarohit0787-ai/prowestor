@@ -104,3 +104,10 @@ button {
 .hidden {
   display: none;
 }
+.pack span {
+  font-weight: bold;
+}
+
+button:hover {
+  background: #019874;
+}
